@@ -3,6 +3,14 @@
 //  the site — no component changes needed.
 // ─────────────────────────────────────────────────────────────
 
+export type Screenshot = {
+  /** Path in /public, e.g. "/work/my-project/home.png". */
+  src: string;
+  alt: string;
+  /** Short label shown on the hover preview, e.g. "Storefront". */
+  caption?: string;
+};
+
 export type Project = {
   slug: string;
   title: string;
@@ -16,8 +24,11 @@ export type Project = {
   repo?: string;
   /** Two colours used for the hover preview card gradient. */
   palette: [string, string];
-  /** Optional screenshot in /public, e.g. "/work/my-project.jpg". */
-  image?: string;
+  /**
+   * Screenshots, first one leading. The hover preview cycles through them;
+   * touch devices get a swipeable strip under the summary.
+   */
+  images?: Screenshot[];
   /** Marks a slot that still needs real content. */
   placeholder?: boolean;
 };
@@ -113,12 +124,29 @@ export const site = {
       slug: "fashion-villa",
       title: "Fashion Villa",
       summary:
-        "Bangla-first fashion storefront for baby, kids', women's and men's wear, with WhatsApp ordering, cash on delivery and order tracking.",
+        "Bangla-first fashion storefront for baby, kids', women's and men's wear, with WhatsApp ordering, cash on delivery and order tracking, run from an admin console for catalogue, orders, campaigns and SEO.",
       role: "Full-stack",
       year: "2025",
-      tags: ["Next.js", "E-commerce", "REST API"],
+      tags: ["Next.js", "E-commerce", "Admin panel", "REST API"],
       href: "https://fashionvillasbd.com",
       palette: ["#be185d", "#fbcfe8"],
+      images: [
+        {
+          src: "/work/fashion-villa/storefront.png",
+          alt: "Fashion Villa storefront: Eid collection hero banner, kids' and accessories tiles, delivery and exchange perks",
+          caption: "Storefront",
+        },
+        {
+          src: "/work/fashion-villa/admin-settings.png",
+          alt: "Fashion Villa admin console settings for the website logo, mobile logo, footer logo and favicon",
+          caption: "Admin · Settings",
+        },
+        {
+          src: "/work/fashion-villa/admin-products.png",
+          alt: "Fashion Villa admin product editor with product photos and a live search engine listing preview",
+          caption: "Admin · Product editor",
+        },
+      ],
     },
     {
       slug: "incommerce",
