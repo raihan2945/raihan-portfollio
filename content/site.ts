@@ -83,9 +83,9 @@ export const site = {
   },
 
   socials: [
-    // TODO: replace with your real profile URLs
-    { label: "GitHub", href: "https://github.com/" },
-    { label: "LinkedIn", href: "https://www.linkedin.com/" },
+    { label: "GitHub", href: "https://github.com/raihan2945" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/raihan2945/" },
+    // TODO: replace with your real X profile URL, or remove
     { label: "X / Twitter", href: "https://x.com/" },
   ],
 
