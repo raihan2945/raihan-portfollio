@@ -191,6 +191,28 @@ export const site = {
       tags: ["Next.js", "Fintech", "Dashboards"],
       href: "https://nirapadbusiness.com/",
       palette: ["#047857", "#a7f3d0"],
+      images: [
+        {
+          src: "/work/nirapod-business/investor-dashboard.png",
+          alt: "Nirapod Business investor dashboard with total balance, wallet and invested amounts, open projects and upcoming returns",
+          caption: "Investor dashboard",
+        },
+        {
+          src: "/work/nirapod-business/projects.png",
+          alt: "Nirapod Business project listings with minimum investment, expected ROI, duration and funding goal for each project",
+          caption: "Projects",
+        },
+        {
+          src: "/work/nirapod-business/wallet.png",
+          alt: "Nirapod Business wallet with available balance, add money, withdraw and invest actions, and a transaction history",
+          caption: "Wallet",
+        },
+        {
+          src: "/work/nirapod-business/website.png",
+          alt: "Nirapod Business public website listing running investment projects with shares raised, markup return and closing dates",
+          caption: "Public website",
+        },
+      ],
     },
   ] satisfies Project[] as Project[],
 
