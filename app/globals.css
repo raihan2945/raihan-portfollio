@@ -206,8 +206,10 @@ body {
   animation-delay: var(--rise-delay, 0ms);
 }
 
-/* Portrait signature: a warm glint of light sweeps across the name, rests,
-   and sweeps again, while the whole signature floats with a slight sway.
+/* Portrait signature: a bold gold-orange glint sweeps across the name while
+   a warm glow flares behind it, a sparkle twinkles where the sweep ends, and
+   the whole signature floats with a slight sway. Shine, glow and sparkle
+   share one duration and delay so they stay in step.
    The text is painted by its background (background-clip: text), so the
    shadow comes from drop-shadow instead of text-shadow, which would show
    through the transparent glyphs. The padding/negative margin pair gives
@@ -216,20 +218,47 @@ body {
   0% {
     background-position: 100% 0;
   }
-  55%,
+  50%,
   100% {
     background-position: 0% 0;
   }
 }
+@keyframes signature-glow {
+  0%,
+  60%,
+  100% {
+    filter: drop-shadow(0 4px 16px rgb(0 0 0 / 0.4)) drop-shadow(0 0 0 rgb(255 150 60 / 0));
+  }
+  28% {
+    filter: drop-shadow(0 4px 16px rgb(0 0 0 / 0.4)) drop-shadow(0 0 14px rgb(255 150 60 / 0.85));
+  }
+}
+@keyframes signature-sparkle {
+  0%,
+  40% {
+    opacity: 0;
+    transform: scale(0.2) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.25) rotate(90deg);
+  }
+  64%,
+  100% {
+    opacity: 0;
+    transform: scale(0.2) rotate(180deg);
+  }
+}
 @keyframes signature-float {
   0% {
-    transform: translateY(0.03em) rotate(-1.5deg);
+    transform: translateY(0.05em) rotate(-2deg);
   }
   100% {
-    transform: translateY(-0.05em) rotate(1deg);
+    transform: translateY(-0.07em) rotate(1.5deg);
   }
 }
 .signature {
+  position: relative;
   display: inline-block;
   padding: 0.2em 0.4em;
   margin: -0.2em -0.4em;
@@ -237,19 +266,37 @@ body {
   text-shadow: none;
   background: linear-gradient(
       105deg,
-      #fff 0 40%,
-      #ffc98a 46%,
-      #fffaf2 50%,
-      #ffc98a 54%,
-      #fff 60% 100%
+      #fff 0 30%,
+      #ffd27a 38%,
+      #ff8a3d 44%,
+      #fff3dc 50%,
+      #ff8a3d 56%,
+      #ffd27a 62%,
+      #fff 70% 100%
     )
     0% 0 / 250% 100% no-repeat;
   -webkit-background-clip: text;
   background-clip: text;
   filter: drop-shadow(0 4px 16px rgb(0 0 0 / 0.4));
   animation:
-    signature-shine 4.5s cubic-bezier(0.45, 0, 0.25, 1) 1s infinite both,
-    signature-float 3.5s ease-in-out infinite alternate;
+    signature-shine 3.2s cubic-bezier(0.45, 0, 0.25, 1) 1s infinite both,
+    signature-glow 3.2s ease-in-out 1s infinite both,
+    signature-float 3s ease-in-out infinite alternate;
+}
+.signature::after {
+  content: "✦";
+  position: absolute;
+  top: 0.3em;
+  right: 0.25em;
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 0.3em;
+  line-height: 1;
+  color: #fff;
+  text-shadow:
+    0 0 6px #ffd27a,
+    0 0 14px #ff8a3d;
+  opacity: 0;
+  animation: signature-sparkle 3.2s ease-out 1s infinite both;
 }
 
 /* Project gallery lightbox (a modal <dialog>). It fades in over a blurred
@@ -337,6 +384,9 @@ html:has(.gallery[open]) {
   }
   .signature {
     animation: none;
+  }
+  .signature::after {
+    display: none;
   }
   .js [data-reveal] {
     opacity: 1;
