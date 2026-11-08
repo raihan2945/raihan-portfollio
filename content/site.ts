@@ -25,8 +25,10 @@ export type Project = {
   /** Two colours used for the hover preview card gradient. */
   palette: [string, string];
   /**
-   * Screenshots, first one leading. The hover preview cycles through them;
-   * touch devices get a swipeable strip under the summary.
+   * Screenshots, first one leading. The card preview cycles through them on
+   * hover (arrows, dots and swipe switch them), and clicking it opens a
+   * full-screen gallery with zoom, captions and thumbnails. The alt text
+   * doubles as the gallery's description line, so keep it descriptive.
    */
   images?: Screenshot[];
   /** Marks a slot that still needs real content. */

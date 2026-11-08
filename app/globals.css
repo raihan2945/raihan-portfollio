@@ -174,6 +174,63 @@ body {
   animation-delay: var(--rise-delay, 0ms);
 }
 
+/* Project gallery lightbox (a modal <dialog>). It fades in over a blurred
+   backdrop and fades out before it leaves the top layer. */
+.gallery {
+  opacity: 0;
+  transition:
+    opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    overlay 0.35s allow-discrete,
+    display 0.35s allow-discrete;
+}
+.gallery[open] {
+  opacity: 1;
+}
+.gallery::backdrop {
+  background: rgb(9 9 11 / 0);
+  backdrop-filter: blur(0);
+  transition:
+    background 0.35s,
+    backdrop-filter 0.35s,
+    overlay 0.35s allow-discrete,
+    display 0.35s allow-discrete;
+}
+.gallery[open]::backdrop {
+  background: rgb(9 9 11 / 0.92);
+  backdrop-filter: blur(12px);
+}
+.gallery-frame {
+  transition: scale 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.gallery:not([open]) .gallery-frame {
+  scale: 0.96;
+}
+@starting-style {
+  .gallery[open] {
+    opacity: 0;
+  }
+  .gallery[open]::backdrop {
+    background: rgb(9 9 11 / 0);
+    backdrop-filter: blur(0);
+  }
+  .gallery[open] .gallery-frame {
+    scale: 0.96;
+  }
+}
+html:has(.gallery[open]) {
+  overflow: hidden;
+}
+
+/* Autoplay progress on a project card's preview */
+@keyframes card-progress {
+  from {
+    scale: 0 1;
+  }
+  to {
+    scale: 1 1;
+  }
+}
+
 /* Theme toggle icons follow the active theme */
 .theme-icon-sun {
   display: none;

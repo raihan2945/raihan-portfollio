@@ -89,6 +89,56 @@ export function ArrowUpRight(p: IconProps) {
   );
 }
 
+export function ChevronLeft(p: IconProps) {
+  return (
+    <svg {...stroke} {...p}>
+      <path d="m14.5 6-6 6 6 6" />
+    </svg>
+  );
+}
+
+export function ChevronRight(p: IconProps) {
+  return (
+    <svg {...stroke} {...p}>
+      <path d="m9.5 6 6 6-6 6" />
+    </svg>
+  );
+}
+
+export function CloseIcon(p: IconProps) {
+  return (
+    <svg {...stroke} {...p}>
+      <path d="M6 6l12 12M18 6 6 18" />
+    </svg>
+  );
+}
+
+export function ExpandIcon(p: IconProps) {
+  return (
+    <svg {...stroke} {...p}>
+      <path d="M14 4h6v6M10 20H4v-6M20 4l-6.5 6.5M4 20l6.5-6.5" />
+    </svg>
+  );
+}
+
+export function ZoomInIcon(p: IconProps) {
+  return (
+    <svg {...stroke} {...p}>
+      <circle cx="11" cy="11" r="6.5" />
+      <path d="m20 20-4.2-4.2M11 8.5v5M8.5 11h5" />
+    </svg>
+  );
+}
+
+export function ZoomOutIcon(p: IconProps) {
+  return (
+    <svg {...stroke} {...p}>
+      <circle cx="11" cy="11" r="6.5" />
+      <path d="m20 20-4.2-4.2M8.5 11h5" />
+    </svg>
+  );
+}
+
 export function GitHubIcon(p: IconProps) {
   return (
     <svg {...solid} {...p}>
