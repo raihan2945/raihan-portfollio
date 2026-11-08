@@ -1,0 +1,33 @@
+# Server deployment: builds the image straight from GitHub. No repo checkout
+# or registry needed. Copy only this file to the server, then:
+#
+#   docker compose -f compose.server.yaml up -d --build    # first run / update to latest main
+#   docker compose -f compose.server.yaml logs -f          # follow logs
+#   docker compose -f compose.server.yaml down             # stop
+#
+# Optional overrides (shell env or a .env file next to this one):
+#   GIT_REF  branch, tag or commit to build (default: main)
+#   PORT     host port to publish (default: 3000)
+
+name: raihan-portfollio
+
+services:
+  web:
+    build:
+      context: https://github.com/raihan2945/raihan-portfollio.git#${GIT_REF:-main}
+      pull: true # always refresh the node base image
+    image: raihan-portfollio:${GIT_REF:-main}
+    container_name: raihan-portfollio
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      NODE_ENV: production
+      NEXT_TELEMETRY_DISABLED: 1
+    init: true # forward signals so `down` stops the server cleanly
+    restart: unless-stopped
+    # healthcheck is defined in the Dockerfile
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

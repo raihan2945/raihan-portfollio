@@ -22,7 +22,7 @@ uploads
 # docker & docs
 Dockerfile
 .dockerignore
-compose.yaml
+compose*.yaml
 *.md
 
 # logs / os
