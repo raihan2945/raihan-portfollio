@@ -71,7 +71,7 @@ export const site = {
   // Big numbers in the intro cards.
   stats: [
     { label: "Building since", value: "2021", note: "Three roles, frontend to full-stack" },
-    { label: "Live products", value: "03", note: "E-commerce and fintech, in production" },
+    { label: "Live products", value: "04", note: "E-commerce, fintech and ERP, in production" },
   ],
 
   // Section headings. Each one lights up word by word as it scrolls into view.
@@ -239,6 +239,38 @@ export const site = {
           src: "/work/nirapod-business/website.png",
           alt: "Nirapod Business public website listing running investment projects with shares raised, markup return and closing dates",
           caption: "Public website",
+        },
+      ],
+    },
+    {
+      slug: "radiant-erp",
+      title: "Radiant General Service ERP",
+      summary:
+        "Internal ERP for Radiant Pharmaceuticals' general service team: car and bike fleet with drivers, maintenance jobs and two-step approvals, fuel, tolls and parking, plus parts inventory, assets, HRM and petty cash. Runs on a private network.",
+      role: "Full-stack",
+      year: "2025",
+      tags: ["ERP", "Fleet management", "Inventory", "Dashboards"],
+      palette: ["#0e7490", "#a5f3fc"],
+      images: [
+        {
+          src: "/work/radiant-erp/cars.png",
+          alt: "Radiant ERP car list with pool, individual and special fleet totals, filters by type and allotment, and each car's brand, model, registration and type",
+          caption: "Fleet",
+        },
+        {
+          src: "/work/radiant-erp/car-maintenance.png",
+          alt: "Radiant ERP car details on the maintenance tab, with job and spend totals, a maintenance log and two approval stages",
+          caption: "Car · Maintenance",
+        },
+        {
+          src: "/work/radiant-erp/maintenance-tasks.png",
+          alt: "Radiant ERP maintenance job drawer with repair order, diagnosis, mileage, next service date and a list of tasks",
+          caption: "Maintenance job",
+        },
+        {
+          src: "/work/radiant-erp/parts-inventory.png",
+          alt: "Radiant ERP parts inventory for one part, listing stock by model, brand and part number with price and stock history",
+          caption: "Parts inventory",
         },
       ],
     },
