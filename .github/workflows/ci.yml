@@ -63,9 +63,9 @@ jobs:
 
       - name: Smoke test container
         run: |
-          docker run -d --name web -p 3000:3000 raihan-portfollio:ci
+          docker run -d --name web -p 4054:4054 raihan-portfollio:ci
           for i in $(seq 1 30); do
-            if curl -fsS http://localhost:3000/ >/dev/null; then
+            if curl -fsS http://localhost:4054/ >/dev/null; then
               echo "Container is serving"; exit 0
             fi
             sleep 1

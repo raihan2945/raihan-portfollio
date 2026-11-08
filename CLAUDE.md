@@ -8,8 +8,9 @@ This is Next.js 16.4 / React 19.3. Read the bundled docs in `node_modules/next/d
 
 ## Commands
 
-- `npm run dev`: dev server at http://localhost:3000 (Turbopack)
-- `npm run build`: production build. Also the type check, since there's no separate `tsc` script
+- `npm run dev`: dev server at http://localhost:4054 (Turbopack). Port 4054 is used everywhere: `npm start`, the Docker image, both compose files and CI
+- `npm run build`: production build (also type-checks)
+- `npm run typecheck`: `next typegen && tsc --noEmit`. Typegen is needed because `next-env.d.ts` is gitignored
 - `npm run lint`: ESLint 9 flat config (`eslint-config-next` core-web-vitals + typescript)
 
 

@@ -7,7 +7,7 @@
 #
 # Optional overrides (shell env or a .env file next to this one):
 #   GIT_REF  branch, tag or commit to build (default: main)
-#   PORT     host port to publish (default: 3000)
+#   PORT     host port to publish (default: 4054)
 
 name: raihan-portfollio
 
@@ -19,7 +19,7 @@ services:
     image: raihan-portfollio:${GIT_REF:-main}
     container_name: raihan-portfollio
     ports:
-      - "${PORT:-3000}:3000"
+      - "${PORT:-4054}:4054"
     environment:
       NODE_ENV: production
       NEXT_TELEMETRY_DISABLED: 1
