@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { AboutIcon, ExperienceIcon, HomeIcon, MailIcon, WorkIcon } from "./icons";
+import { playSound } from "./sound";
+import { SoundToggle } from "./sound-toggle";
 import { ThemeToggle } from "./theme-toggle";
 
 const items = [
@@ -26,9 +28,15 @@ export function SideNav() {
     const sections = items
       .map((i) => document.getElementById(i.id))
       .filter((el): el is HTMLElement => el !== null);
+    let current = "home";
     const io = new IntersectionObserver(
       (entries) => {
-        for (const e of entries) if (e.isIntersecting) setActive(e.target.id);
+        for (const e of entries) {
+          if (!e.isIntersecting || e.target.id === current) continue;
+          current = e.target.id;
+          setActive(current);
+          playSound("section");
+        }
       },
       // A thin band across the middle of the viewport decides the active section.
       { rootMargin: "-45% 0px -50% 0px" },
@@ -65,6 +73,9 @@ export function SideNav() {
         <li aria-hidden className="mx-1 h-6 w-px bg-line lg:mx-0 lg:my-1 lg:h-px lg:w-6" />
         <li>
           <ThemeToggle className={`${button} text-ink-soft hover:bg-bg hover:text-ink`} />
+        </li>
+        <li>
+          <SoundToggle className={`${button} text-ink-soft hover:bg-bg hover:text-ink`} />
         </li>
       </ul>
     </nav>

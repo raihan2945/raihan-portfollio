@@ -16,6 +16,24 @@ const stroke = {
 
 const solid = { width: 16, height: 16, viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": true } as const;
 
+export function SoundOnIcon(p: IconProps) {
+  return (
+    <svg {...stroke} {...p}>
+      <path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5H4Z" />
+      <path d="M15.5 9a4.2 4.2 0 0 1 0 6M18.2 6.5a8 8 0 0 1 0 11" />
+    </svg>
+  );
+}
+
+export function SoundOffIcon(p: IconProps) {
+  return (
+    <svg {...stroke} {...p}>
+      <path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5H4Z" />
+      <path d="m16 9.5 5 5M21 9.5l-5 5" />
+    </svg>
+  );
+}
+
 export function HomeIcon(p: IconProps) {
   return (
     <svg {...stroke} {...p}>

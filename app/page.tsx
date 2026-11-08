@@ -7,6 +7,7 @@ import { ArrowUpRight, SocialIcon } from "./components/icons";
 import { ProjectCard } from "./components/project-card";
 import { RevealObserver } from "./components/reveal-observer";
 import { SideNav } from "./components/side-nav";
+import { SoundEffects } from "./components/sound-effects";
 
 function delay(ms: number) {
   return { "--reveal-delay": `${ms}ms` } as React.CSSProperties;
@@ -141,6 +142,7 @@ export default function Home() {
       </div>
 
       <RevealObserver />
+      <SoundEffects />
       <SideNav />
 
       <div className="px-4 pb-28 pt-4 sm:px-6 lg:grid lg:grid-cols-[minmax(320px,370px)_minmax(0,1fr)] lg:gap-10 lg:pb-4 lg:pl-4 lg:pr-24">

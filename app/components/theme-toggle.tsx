@@ -19,7 +19,7 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
   }
 
   return (
-    <button type="button" onClick={toggle} aria-label="Toggle colour theme" className={className}>
+    <button type="button" onClick={toggle} data-sound="toggle" aria-label="Toggle colour theme" className={className}>
       <svg
         className="theme-icon-moon"
         width="17"
