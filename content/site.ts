@@ -70,7 +70,7 @@ export const site = {
 
   // Big numbers in the intro cards.
   stats: [
-    { label: "Building since", value: "2022", note: "At Impala Intech, across three roles" },
+    { label: "Building since", value: "2021", note: "Three roles, frontend to full-stack" },
     { label: "Live products", value: "03", note: "E-commerce and fintech, in production" },
   ],
 
@@ -251,7 +251,7 @@ export const site = {
         "Moved into full-stack work: the APIs and data models as well as the interfaces on top of them.",
     },
     {
-      period: "2022 — 2023",
+      period: "2021 — 2023",
       role: "Frontend Developer",
       company: "Impala Intech",
       companyHref: "https://impalaintech.com",
