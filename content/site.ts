@@ -71,7 +71,7 @@ export const site = {
   // Big numbers in the intro cards.
   stats: [
     { label: "Building since", value: "2021", note: "Three roles, frontend to full-stack" },
-    { label: "Live products", value: "05", note: "E-commerce, fintech and internal tools, in production" },
+    { label: "Live products", value: "06", note: "E-commerce, fintech, community and internal tools" },
   ],
 
   // Section headings. Each one lights up word by word as it scrolls into view.
@@ -275,6 +275,49 @@ export const site = {
         {
           src: "/work/nirapod-business/website.png",
           alt: "Nirapod Business public website listing running investment projects with shares raised, markup return and closing dates",
+          caption: "Public website",
+        },
+      ],
+    },
+    {
+      slug: "dupaaa",
+      title: "DUPAAA",
+      summary:
+        "Website and admin for the Dhaka University Public Administration Alumni Association: a member directory, membership and life-member payments, events with free or paid booking, a notice board, publications and a photo gallery, with Bangla and English content.",
+      role: "Full-stack",
+      year: "2026",
+      tags: ["Next.js", "Community", "Payments", "Admin panel"],
+      href: "https://dupaaa.org",
+      palette: ["#312e81", "#fcd34d"],
+      images: [
+        {
+          src: "/work/dupaaa/events.png",
+          alt: "DUPAAA admin events list with dates, free or paid booking type, fee, booking counts and status",
+          caption: "Admin · Events",
+        },
+        {
+          src: "/work/dupaaa/publications.png",
+          alt: "DUPAAA admin publications list with periodical, yearly and special issues, their published dates and status",
+          caption: "Admin · Publications",
+        },
+        {
+          src: "/work/dupaaa/notice-editor.png",
+          alt: "DUPAAA notice editor with a Bangla notice, publish and expiry dates, visibility, pin to top and an image",
+          caption: "Admin · Notice editor",
+        },
+        {
+          src: "/work/dupaaa/members.png",
+          alt: "DUPAAA member directory filtered by status, session, profession and role, with member names and photos blurred",
+          caption: "Admin · Members",
+        },
+        {
+          src: "/work/dupaaa/dashboard.png",
+          alt: "DUPAAA admin dashboard with shortcuts to profiles, students, membership payments, notices, events, publications and photos",
+          caption: "Admin · Dashboard",
+        },
+        {
+          src: "/work/dupaaa/gallery.png",
+          alt: "DUPAAA public website gallery of archive photos from alumni batches at Dhaka University",
           caption: "Public website",
         },
       ],
