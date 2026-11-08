@@ -152,12 +152,34 @@ export const site = {
       slug: "incommerce",
       title: "InCommerce",
       summary:
-        "Electronics and PC-parts store with a PC builder, product compare, warranty checks, trade-in, EMI and a bilingual English/Bangla interface.",
+        "Electronics and PC-parts store with a PC builder, product compare, warranty checks, trade-in, EMI and a bilingual English/Bangla interface, backed by an admin with category spec templates and serial-tracked inventory.",
       role: "Full-stack",
       year: "2025",
       tags: ["E-commerce", "Admin panel", "i18n"],
       href: "http://incommerce.online",
       palette: ["#1d4ed8", "#93c5fd"],
+      images: [
+        {
+          src: "/work/incommerce/storefront.png",
+          alt: "InCommerce storefront: new-arrivals hero with a monitor, trade-in and pre-order tiles, and warranty, specs and delivery highlights",
+          caption: "Storefront",
+        },
+        {
+          src: "/work/incommerce/admin-products.png",
+          alt: "InCommerce admin product list with search by model number or SKU, category, brand and status filters, prices and stock",
+          caption: "Admin · Products",
+        },
+        {
+          src: "/work/incommerce/admin-product-media.png",
+          alt: "InCommerce admin product editor on the media tab, with image ordering, alt text and a publish checklist",
+          caption: "Admin · Product media",
+        },
+        {
+          src: "/work/incommerce/admin-categories.png",
+          alt: "InCommerce admin category tree with the keyboards spec template of attributes, groups and required flags",
+          caption: "Admin · Spec templates",
+        },
+      ],
     },
     {
       slug: "nirapod-business",
