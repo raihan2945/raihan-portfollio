@@ -33,8 +33,8 @@ function SectionHead({ label, text }: { label: string; text: string }) {
   const words = text.split(" ");
   return (
     <div data-reveal className="relative">
-      <Eyebrow className="mb-4 sm:absolute sm:left-0 sm:top-[0.85rem] sm:mb-0">{label}</Eyebrow>
-      <h2 className="lit max-w-[34ch] font-display text-[clamp(1.9rem,5.6cqi,3.6rem)] font-semibold leading-[1.08] tracking-[-0.01em] sm:indent-[11rem]">
+      <Eyebrow className="mb-4 sm:absolute sm:left-0 sm:top-[0.45rem] sm:mb-0">{label}</Eyebrow>
+      <h2 className="lit max-w-[38ch] font-display text-[clamp(1.6rem,3.3cqi,2.35rem)] font-semibold leading-[1.12] tracking-[-0.01em] sm:indent-[11rem]">
         {words.map((w, i) => (
           <Fragment key={i}>
             <span
@@ -157,7 +157,7 @@ export default function Home() {
           <section id="home" className="pt-16 lg:pt-20">
             <Eyebrow className="rise">Introduction</Eyebrow>
 
-            <h1 className="mt-6 max-w-[24ch] font-display text-[clamp(2.7rem,8cqi,5.75rem)] font-semibold leading-[0.98] tracking-[-0.015em]">
+            <h1 className="mt-6 max-w-[24ch] font-display text-[clamp(2.25rem,5.6cqi,4rem)] font-semibold leading-[0.98] tracking-[-0.015em]">
               {headWords.map((w, i) => (
                 <span key={i} className="rise inline-block" style={rise(80 + i * 60)}>
                   {w}&nbsp;
@@ -174,7 +174,7 @@ export default function Home() {
             {/* Intro and pills stack on narrow columns and sit side by side on wide ones. */}
             <div className="@5xl:mt-10 @5xl:flex @5xl:items-end @5xl:justify-between @5xl:gap-12">
               <p
-                className="rise mt-7 max-w-xl text-base leading-relaxed text-ink-soft @5xl:mt-0 @5xl:text-lg"
+                className="rise mt-7 max-w-xl text-base leading-relaxed text-ink-soft @5xl:mt-0"
                 style={rise(600)}
               >
                 {site.intro}
@@ -196,13 +196,13 @@ export default function Home() {
               {site.stats.map((s, i) => (
                 <div
                   key={s.label}
-                  className="rise card flex min-h-[200px] flex-col justify-between rounded-[28px] p-6"
+                  className="rise card flex min-h-[168px] flex-col justify-between rounded-3xl p-6"
                   style={rise(800 + i * 100)}
                 >
                   <Eyebrow>{s.label}</Eyebrow>
                   <div className="flex items-end justify-between gap-4">
                     <p className="max-w-[12ch] text-sm leading-snug text-ink-faint">{s.note}</p>
-                    <p className="font-display text-[5.5rem] font-medium leading-[0.8] tracking-[-0.03em]">
+                    <p className="font-display text-[4rem] font-medium leading-[0.8] tracking-[-0.03em]">
                       {s.value}
                     </p>
                   </div>
@@ -214,7 +214,7 @@ export default function Home() {
           {/* ── Work ─────────────────────────────────────────── */}
           <section id="work" className="pt-28 sm:pt-36">
             <SectionHead label="Selected work" text={site.sections.work} />
-            <div className="mt-12 grid gap-6 @5xl:grid-cols-2">
+            <div className="mt-10 grid gap-4 @2xl:grid-cols-2 @6xl:grid-cols-3">
               {site.projects.map((p, i) => (
                 <ProjectCard key={p.slug} project={p} index={i} />
               ))}
@@ -254,9 +254,9 @@ export default function Home() {
                           </span>
                         )}
                       </p>
-                      <h3 className="mt-1 font-display text-2xl font-semibold tracking-tight @4xl:text-3xl">{e.role}</h3>
+                      <h3 className="mt-1 font-display text-xl font-semibold tracking-tight">{e.role}</h3>
                     </div>
-                    <p className="mt-1.5 max-w-md text-sm leading-relaxed text-ink-soft @4xl:mt-0 @4xl:max-w-none @4xl:pt-6 @4xl:text-base">
+                    <p className="mt-1.5 max-w-md text-sm leading-relaxed text-ink-soft @4xl:mt-0 @4xl:max-w-none @4xl:pt-5">
                       {e.summary}
                     </p>
                   </div>
@@ -286,7 +286,7 @@ export default function Home() {
                   <dt className="font-display text-sm font-semibold uppercase tracking-[0.14em] text-ink-faint">
                     {f.label}
                   </dt>
-                  <dd className="mt-1 font-display text-lg font-semibold">{f.value}</dd>
+                  <dd className="mt-1 font-display text-base font-semibold">{f.value}</dd>
                 </div>
               ))}
             </dl>
@@ -295,7 +295,7 @@ export default function Home() {
               {site.capabilities.map((c, i) => (
                 <div key={c.title} data-reveal style={delay((i % 2) * 100)} className="card flex flex-col rounded-[28px] p-6">
                   <span className="font-display text-sm font-semibold text-accent">0{i + 1}</span>
-                  <h3 className="mt-2 font-display text-2xl font-semibold tracking-tight">{c.title}</h3>
+                  <h3 className="mt-2 font-display text-xl font-semibold tracking-tight">{c.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-ink-soft">{c.blurb}</p>
                   <ul className="mt-5 space-y-2 border-t border-line pt-5">
                     {c.items.map((item) => (
@@ -319,7 +319,7 @@ export default function Home() {
                     style={delay((i % 3) * 60)}
                     className="card group flex items-center justify-between gap-3 rounded-2xl px-4 py-4 transition-colors hover:border-ink"
                   >
-                    <span className="font-display text-lg font-semibold">{t}</span>
+                    <span className="font-display text-base font-semibold">{t}</span>
                     <span className="font-display text-sm font-semibold text-ink-faint transition-colors group-hover:text-accent">
                       {String(i + 1).padStart(2, "0")}
                     </span>
@@ -337,7 +337,7 @@ export default function Home() {
               <p className="text-sm text-ink-faint">Write to me at</p>
               <a
                 href={`mailto:${site.email}`}
-                className="mt-1 block break-all font-display text-[clamp(1.7rem,4.6vw,2.75rem)] font-semibold leading-tight transition-colors hover:text-accent"
+                className="mt-1 block break-all font-display text-[clamp(1.4rem,3.2cqi,2.1rem)] font-semibold leading-tight transition-colors hover:text-accent"
               >
                 {site.email}
               </a>
