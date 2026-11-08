@@ -37,6 +37,8 @@ export type Experience = {
   period: string;
   role: string;
   company: string;
+  /** Company website (optional). */
+  companyHref?: string;
   summary: string;
   placeholder?: boolean;
 };
@@ -66,10 +68,10 @@ export const site = {
     { label: "Data", value: "PostgreSQL · Redis" },
   ],
 
-  // Big numbers in the intro cards. TODO: swap in years of experience etc. once confirmed.
+  // Big numbers in the intro cards.
   stats: [
+    { label: "Building since", value: "2022", note: "At Impala Intech, across three roles" },
     { label: "Live products", value: "03", note: "E-commerce and fintech, in production" },
-    { label: "Stack layers", value: "03", note: "Frontend, backend and infrastructure" },
   ],
 
   // Section headings. Each one lights up word by word as it scrolls into view.
@@ -231,26 +233,29 @@ export const site = {
   ] satisfies Project[] as Project[],
 
   experience: [
+    // TODO: sharpen the summaries with real products, scale and impact.
     {
-      period: "2024 — Now",
-      role: "Full-stack Engineer",
-      company: "Company name",
-      summary: "Placeholder — what you built, owned and improved.",
-      placeholder: true,
-    },
-    {
-      period: "2022 — 2024",
+      period: "2025 — Now",
       role: "Software Engineer",
-      company: "Company name",
-      summary: "Placeholder — key products, scale and impact.",
-      placeholder: true,
+      company: "Impala Intech",
+      companyHref: "https://impalaintech.com",
+      summary:
+        "Building client software end to end at a studio that ships web, mobile and AI-driven products.",
     },
     {
-      period: "2020 — 2022",
+      period: "2023 — 2025",
+      role: "Full-stack Developer",
+      company: "Impala Intech",
+      companyHref: "https://impalaintech.com",
+      summary:
+        "Moved into full-stack work: the APIs and data models as well as the interfaces on top of them.",
+    },
+    {
+      period: "2022 — 2023",
       role: "Frontend Developer",
-      company: "Company name",
-      summary: "Placeholder — where it started.",
-      placeholder: true,
+      company: "Impala Intech",
+      companyHref: "https://impalaintech.com",
+      summary: "Joined the team building responsive, accessible interfaces for client web applications.",
     },
   ] satisfies Experience[] as Experience[],
 };

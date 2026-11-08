@@ -221,7 +221,19 @@ export default function Home() {
                 >
                   <div className="min-w-0">
                     <p className="flex flex-wrap items-center gap-2 text-sm text-ink-faint">
-                      {e.company}
+                      {e.companyHref ? (
+                        <a
+                          href={e.companyHref}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 transition-colors hover:text-accent"
+                        >
+                          {e.company}
+                          <ArrowUpRight width={12} height={12} />
+                        </a>
+                      ) : (
+                        e.company
+                      )}
                       {e.placeholder && (
                         <span className="rounded-full bg-accent-soft px-2 py-0.5 font-display text-xs font-semibold text-accent">
                           Placeholder
