@@ -184,8 +184,8 @@ export default function Home() {
               &amp; shipped.
             </h2>
             <p data-reveal style={delay(100)} className="max-w-xs text-sm leading-relaxed text-ink-soft">
-              A few projects spanning product UI, APIs and infrastructure. Hover a row for a
-              preview.
+              Live products across e-commerce and fintech, from storefront to admin and API.
+              Hover a row for a preview.
             </p>
           </div>
           <WorkList projects={site.projects} />
