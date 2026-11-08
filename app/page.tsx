@@ -131,7 +131,13 @@ function ProfileCard() {
 }
 
 export default function Home() {
-  const headWords = site.headline.lead.split(" ");
+  // Each headline word gets its own masked reveal, coloured by the part it belongs to.
+  const words = (text: string, tone: string) => text.split(" ").map((word) => ({ word, tone }));
+  const headline = [
+    ...words(site.headline.lead, ""),
+    ...words(site.headline.accent, "text-accent"),
+    ...words(site.headline.tail, "text-ink-faint"),
+  ];
   const pills = [site.facts[0].value, ...site.capabilities.map((c) => c.title)];
 
   return (
@@ -157,18 +163,19 @@ export default function Home() {
           <section id="home" className="pt-16 lg:pt-20">
             <Eyebrow className="rise">Introduction</Eyebrow>
 
-            <h1 className="mt-6 max-w-[24ch] font-display text-[clamp(2.25rem,5.6cqi,4rem)] font-semibold leading-[0.98] tracking-[-0.015em]">
-              {headWords.map((w, i) => (
-                <span key={i} className="rise inline-block" style={rise(80 + i * 60)}>
-                  {w}&nbsp;
-                </span>
+            <h1
+              aria-label={`${site.headline.lead} ${site.headline.accent} ${site.headline.tail}`}
+              className="mt-6 max-w-[24ch] font-display text-[clamp(2.25rem,5.6cqi,4rem)] font-semibold leading-[0.98] tracking-[-0.015em]"
+            >
+              {headline.map(({ word, tone }, i) => (
+                <Fragment key={i}>
+                  <span aria-hidden className="word-mask">
+                    <span className={`word-in ${tone}`} style={rise(120 + i * 55)}>
+                      {word}
+                    </span>
+                  </span>{" "}
+                </Fragment>
               ))}
-              <span className="rise inline-block text-accent" style={rise(80 + headWords.length * 60)}>
-                {site.headline.accent}&nbsp;
-              </span>
-              <span className="rise inline text-ink-faint" style={rise(160 + headWords.length * 60)}>
-                {site.headline.tail}
-              </span>
             </h1>
 
             {/* Intro and pills stack on narrow columns and sit side by side on wide ones. */}

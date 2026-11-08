@@ -174,6 +174,38 @@ body {
   animation-delay: var(--rise-delay, 0ms);
 }
 
+/* Hero headline: each word slides up from behind a clip line, sharpening
+   out of a blur and settling from a slight tilt. The padding/negative margin
+   pair gives descenders room inside the mask without changing the layout. */
+@keyframes word-in {
+  from {
+    opacity: 0;
+    transform: translateY(105%) rotate(6deg);
+    filter: blur(8px);
+  }
+  60% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+.word-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding: 0.04em 0.06em 0.16em;
+  margin: -0.04em -0.06em -0.16em;
+}
+.word-in {
+  display: inline-block;
+  transform-origin: 0 100%;
+  animation: word-in 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--rise-delay, 0ms);
+}
+
 /* Project gallery lightbox (a modal <dialog>). It fades in over a blurred
    backdrop and fades out before it leaves the top layer. */
 .gallery {
