@@ -97,11 +97,17 @@ export const site = {
     "PostgreSQL",
     "Redis",
     "GraphQL",
-    "Docker",
-    "AWS",
-    "Tailwind CSS",
     "Prisma",
-    "CI/CD",
+    "Tailwind CSS",
+    "OpenAI API",
+    "LangChain",
+    "pgvector",
+    "Docker",
+    "Kubernetes",
+    "AWS",
+    "GitHub Actions",
+    "Terraform",
+    "Nginx",
   ],
 
   about: {
@@ -127,10 +133,16 @@ export const site = {
       items: ["Node.js", "REST & GraphQL", "PostgreSQL", "Redis & queues", "Auth & payments"],
     },
     {
-      title: "Infrastructure",
+      title: "AI",
       blurb:
-        "Pragmatic cloud setups with automated delivery, observability and sensible costs.",
-      items: ["Docker", "AWS / Vercel", "CI/CD pipelines", "Monitoring", "Testing strategy"],
+        "LLM features that hold up in production: grounded in your data, measurable and cheap to run.",
+      items: ["LLM APIs (OpenAI, Claude)", "RAG & vector search", "Agents & tool calling", "Prompt design & evals", "Streaming AI interfaces"],
+    },
+    {
+      title: "DevOps",
+      blurb:
+        "Automated delivery and reproducible infrastructure, with observability and sensible costs.",
+      items: ["Docker & Kubernetes", "AWS / Vercel", "CI/CD with GitHub Actions", "Terraform", "Monitoring & logging"],
     },
   ],
 

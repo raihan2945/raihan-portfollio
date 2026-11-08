@@ -274,9 +274,9 @@ export default function Home() {
               ))}
             </dl>
 
-            <div className="mt-3 grid gap-3 md:grid-cols-3">
+            <div className="mt-3 grid gap-3 md:grid-cols-2">
               {site.capabilities.map((c, i) => (
-                <div key={c.title} data-reveal style={delay(i * 100)} className="card flex flex-col rounded-[28px] p-6">
+                <div key={c.title} data-reveal style={delay((i % 2) * 100)} className="card flex flex-col rounded-[28px] p-6">
                   <span className="font-display text-sm font-semibold text-accent">0{i + 1}</span>
                   <h3 className="mt-2 font-display text-2xl font-semibold tracking-tight">{c.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-ink-soft">{c.blurb}</p>
