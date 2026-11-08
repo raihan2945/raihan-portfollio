@@ -1,22 +1,21 @@
-# Server deployment: builds the image straight from GitHub. No repo checkout
-# or registry needed. Copy only this file to the server, then:
+# Server deployment: pulls the image that CI publishes to GitHub Container
+# Registry (the repo's "Packages" section). No repo checkout or build needed.
+# Copy only this file to the server, then:
 #
-#   docker compose -f compose.server.yaml up -d --build    # first run / update to latest main
-#   docker compose -f compose.server.yaml logs -f          # follow logs
-#   docker compose -f compose.server.yaml down             # stop
+#   docker compose -f compose.server.yaml up -d     # deploy, or update to the newest image
+#   docker compose -f compose.server.yaml logs -f   # follow logs
+#   docker compose -f compose.server.yaml down      # stop
 #
 # Optional overrides (shell env or a .env file next to this one):
-#   GIT_REF  branch, tag or commit to build (default: main)
-#   PORT     host port to publish (default: 4054)
+#   TAG   image tag to run: latest (default), sha-<short commit>, or a version like 1.2.0
+#   PORT  host port to publish (default: 4054)
 
 name: raihan-portfollio
 
 services:
   web:
-    build:
-      context: https://github.com/raihan2945/raihan-portfollio.git#${GIT_REF:-main}
-      pull: true # always refresh the node base image
-    image: raihan-portfollio:${GIT_REF:-main}
+    image: ghcr.io/raihan2945/raihan-portfollio:${TAG:-latest}
+    pull_policy: always # `up` always checks for a newer image
     container_name: raihan-portfollio
     ports:
       - "${PORT:-4054}:4054"
