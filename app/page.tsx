@@ -87,7 +87,7 @@ function ProfileCard() {
           aria-hidden
           className="absolute inset-x-0 bottom-2 text-center font-script text-[4.5rem] leading-none text-white [text-shadow:0_4px_24px_rgb(0_0_0/0.35)]"
         >
-          {firstName}
+          <span className="signature">{firstName}</span>
         </span>
       </div>
 

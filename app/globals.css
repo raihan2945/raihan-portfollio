@@ -206,6 +206,41 @@ body {
   animation-delay: var(--rise-delay, 0ms);
 }
 
+/* Portrait signature: a soft-edged mask sweeps left to right so the name
+   looks hand-written, holds, fades out and writes itself again, forever.
+   The padding/negative margin pair keeps the script's swashes and shadow
+   inside the mask without moving the text. */
+@keyframes signature-write {
+  0% {
+    mask-position: 100% 0;
+    opacity: 1;
+    transform: translateY(0.04em);
+  }
+  40% {
+    mask-position: 0% 0;
+    transform: none;
+  }
+  84% {
+    opacity: 1;
+    transform: translateY(-0.03em);
+  }
+  94%,
+  100% {
+    mask-position: 0% 0;
+    opacity: 0;
+    transform: translateY(-0.06em);
+  }
+}
+.signature {
+  display: inline-block;
+  padding: 0.2em 0.4em;
+  margin: -0.2em -0.4em;
+  mask-image: linear-gradient(90deg, #000 0 40%, transparent 60% 100%);
+  mask-size: 250% 100%;
+  mask-repeat: no-repeat;
+  animation: signature-write 7s cubic-bezier(0.45, 0, 0.25, 1) 0.8s infinite both;
+}
+
 /* Project gallery lightbox (a modal <dialog>). It fades in over a blurred
    backdrop and fades out before it leaves the top layer. */
 .gallery {
@@ -288,6 +323,10 @@ html:has(.gallery[open]) {
   .lit-word {
     animation: none;
     color: var(--ink);
+  }
+  .signature {
+    animation: none;
+    mask-image: none;
   }
   .js [data-reveal] {
     opacity: 1;
