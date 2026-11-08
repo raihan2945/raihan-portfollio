@@ -43,7 +43,7 @@ export function ProjectCard({ project: p, index }: { project: Project; index: nu
               alt={j === frame ? img.alt : ""}
               aria-hidden={j !== frame}
               fill
-              sizes="(min-width: 1024px) 720px, 100vw"
+              sizes="(min-width: 1560px) 620px, (min-width: 1024px) 1000px, 100vw"
               className="object-cover object-left-top transition-[opacity,scale] duration-700 ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-[1.015]"
               style={{ opacity: j === frame ? 1 : 0 }}
             />

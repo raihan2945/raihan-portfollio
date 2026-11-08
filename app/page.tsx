@@ -34,7 +34,7 @@ function SectionHead({ label, text }: { label: string; text: string }) {
   return (
     <div data-reveal className="relative">
       <Eyebrow className="mb-4 sm:absolute sm:left-0 sm:top-[0.85rem] sm:mb-0">{label}</Eyebrow>
-      <h2 className="lit font-display text-[clamp(1.9rem,4.4vw,2.9rem)] font-semibold leading-[1.08] tracking-[-0.01em] sm:indent-[11rem]">
+      <h2 className="lit max-w-[34ch] font-display text-[clamp(1.9rem,5.6cqi,3.6rem)] font-semibold leading-[1.08] tracking-[-0.01em] sm:indent-[11rem]">
         {words.map((w, i) => (
           <Fragment key={i}>
             <span
@@ -150,12 +150,14 @@ export default function Home() {
           <ProfileCard />
         </aside>
 
-        <main className="mx-auto w-full max-w-[720px]">
+        {/* Up to 720px wide on small screens, growing to fill wide ones. Inner grids
+            respond to this column's width (container queries), not the viewport's. */}
+        <main className="@container mx-auto w-full max-w-[720px] lg:max-w-[1240px]">
           {/* ── Introduction ─────────────────────────────────── */}
           <section id="home" className="pt-16 lg:pt-20">
             <Eyebrow className="rise">Introduction</Eyebrow>
 
-            <h1 className="mt-6 font-display text-[clamp(2.7rem,6.4vw,4.6rem)] font-semibold leading-[0.98] tracking-[-0.015em]">
+            <h1 className="mt-6 max-w-[24ch] font-display text-[clamp(2.7rem,8cqi,5.75rem)] font-semibold leading-[0.98] tracking-[-0.015em]">
               {headWords.map((w, i) => (
                 <span key={i} className="rise inline-block" style={rise(80 + i * 60)}>
                   {w}&nbsp;
@@ -169,17 +171,26 @@ export default function Home() {
               </span>
             </h1>
 
-            <p className="rise mt-7 max-w-xl text-base leading-relaxed text-ink-soft" style={rise(600)}>
-              {site.intro}
-            </p>
+            {/* Intro and pills stack on narrow columns and sit side by side on wide ones. */}
+            <div className="@5xl:mt-10 @5xl:flex @5xl:items-end @5xl:justify-between @5xl:gap-12">
+              <p
+                className="rise mt-7 max-w-xl text-base leading-relaxed text-ink-soft @5xl:mt-0 @5xl:text-lg"
+                style={rise(600)}
+              >
+                {site.intro}
+              </p>
 
-            <ul className="rise mt-8 flex flex-wrap gap-2" style={rise(700)}>
-              {pills.map((t) => (
-                <li key={t} className="card rounded-full px-4 py-2 font-display text-sm font-semibold">
-                  {t}
-                </li>
-              ))}
-            </ul>
+              <ul
+                className="rise mt-8 flex flex-wrap gap-2 @5xl:mt-0 @5xl:max-w-[480px] @5xl:shrink-0 @5xl:justify-end"
+                style={rise(700)}
+              >
+                {pills.map((t) => (
+                  <li key={t} className="card rounded-full px-4 py-2 font-display text-sm font-semibold">
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            </div>
 
             <div className="mt-12 grid gap-3 sm:grid-cols-2">
               {site.stats.map((s, i) => (
@@ -203,7 +214,7 @@ export default function Home() {
           {/* ── Work ─────────────────────────────────────────── */}
           <section id="work" className="pt-28 sm:pt-36">
             <SectionHead label="Selected work" text={site.sections.work} />
-            <div className="mt-12 space-y-6">
+            <div className="mt-12 grid gap-6 @5xl:grid-cols-2">
               {site.projects.map((p, i) => (
                 <ProjectCard key={p.slug} project={p} index={i} />
               ))}
@@ -219,31 +230,35 @@ export default function Home() {
                   key={i}
                   data-reveal
                   style={delay(i * 80)}
-                  className="flex flex-col gap-3 border-b border-line py-6 sm:flex-row sm:items-start sm:justify-between sm:gap-6"
+                  className="flex flex-col gap-3 border-b border-line py-6 sm:flex-row sm:items-start sm:justify-between sm:gap-6 @4xl:grid @4xl:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)_auto] @4xl:gap-10 @4xl:py-8"
                 >
-                  <div className="min-w-0">
-                    <p className="flex flex-wrap items-center gap-2 text-sm text-ink-faint">
-                      {e.companyHref ? (
-                        <a
-                          href={e.companyHref}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 transition-colors hover:text-accent"
-                        >
-                          {e.company}
-                          <ArrowUpRight width={12} height={12} />
-                        </a>
-                      ) : (
-                        e.company
-                      )}
-                      {e.placeholder && (
-                        <span className="rounded-full bg-accent-soft px-2 py-0.5 font-display text-xs font-semibold text-accent">
-                          Placeholder
-                        </span>
-                      )}
+                  <div className="min-w-0 @4xl:contents">
+                    <div className="min-w-0">
+                      <p className="flex flex-wrap items-center gap-2 text-sm text-ink-faint">
+                        {e.companyHref ? (
+                          <a
+                            href={e.companyHref}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 transition-colors hover:text-accent"
+                          >
+                            {e.company}
+                            <ArrowUpRight width={12} height={12} />
+                          </a>
+                        ) : (
+                          e.company
+                        )}
+                        {e.placeholder && (
+                          <span className="rounded-full bg-accent-soft px-2 py-0.5 font-display text-xs font-semibold text-accent">
+                            Placeholder
+                          </span>
+                        )}
+                      </p>
+                      <h3 className="mt-1 font-display text-2xl font-semibold tracking-tight @4xl:text-3xl">{e.role}</h3>
+                    </div>
+                    <p className="mt-1.5 max-w-md text-sm leading-relaxed text-ink-soft @4xl:mt-0 @4xl:max-w-none @4xl:pt-6 @4xl:text-base">
+                      {e.summary}
                     </p>
-                    <h3 className="mt-1 font-display text-2xl font-semibold tracking-tight">{e.role}</h3>
-                    <p className="mt-1.5 max-w-md text-sm leading-relaxed text-ink-soft">{e.summary}</p>
                   </div>
                   <span className="card w-fit shrink-0 rounded-full px-3.5 py-1.5 font-display text-sm font-semibold">
                     {e.period}
@@ -276,7 +291,7 @@ export default function Home() {
               ))}
             </dl>
 
-            <div className="mt-3 grid gap-3 md:grid-cols-2">
+            <div className="mt-3 grid gap-3 md:grid-cols-2 @5xl:grid-cols-4">
               {site.capabilities.map((c, i) => (
                 <div key={c.title} data-reveal style={delay((i % 2) * 100)} className="card flex flex-col rounded-[28px] p-6">
                   <span className="font-display text-sm font-semibold text-accent">0{i + 1}</span>
@@ -296,7 +311,7 @@ export default function Home() {
 
             <div className="pt-24">
               <SectionHead label="Toolbox" text={site.sections.tools} />
-              <ul className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3">
+              <ul className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 @5xl:grid-cols-6">
                 {site.tools.map((t, i) => (
                   <li
                     key={t}
