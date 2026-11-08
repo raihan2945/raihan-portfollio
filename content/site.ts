@@ -71,7 +71,7 @@ export const site = {
   // Big numbers in the intro cards.
   stats: [
     { label: "Building since", value: "2021", note: "Three roles, frontend to full-stack" },
-    { label: "Live products", value: "04", note: "E-commerce, fintech and ERP, in production" },
+    { label: "Live products", value: "05", note: "E-commerce, fintech and internal tools, in production" },
   ],
 
   // Section headings. Each one lights up word by word as it scrolls into view.
@@ -148,6 +148,43 @@ export const site = {
 
   // TODO: confirm `role` and `year` for each project.
   projects: [
+    {
+      slug: "iacc-connect",
+      title: "IACC Connect",
+      summary:
+        "Internal audit management for Radiant's audit department: audit projects run through a staged review workflow, with sections, document requisitions, risk-rated observations and auditee replies with corrective actions. Draft reports are versioned, final reports are laid out in a page editor and exported to PDF, and follow-ups are tracked. Runs on a private network.",
+      role: "Full-stack",
+      year: "2026",
+      tags: ["Audit workflow", "Report editor", "PDF export", "Dashboards"],
+      palette: ["#1e3a8a", "#fdba74"],
+      images: [
+        {
+          src: "/work/iacc-connect/dashboard.png",
+          alt: "IACC Connect dashboard with total, in-progress, completed and overdue audit counts, an audit project list and overdue requisitions waiting on the user",
+          caption: "Dashboard",
+        },
+        {
+          src: "/work/iacc-connect/project-overview.png",
+          alt: "IACC Connect audit project page with its workflow step, audit sections with requisition and observation counts, the team and progress",
+          caption: "Audit project",
+        },
+        {
+          src: "/work/iacc-connect/observation-form.png",
+          alt: "IACC Connect observation form with implication, risk magnitude and recommendation, the auditee's reply with corrective and preventive actions, and responsible people",
+          caption: "Observation",
+        },
+        {
+          src: "/work/iacc-connect/draft-report.png",
+          alt: "IACC Connect draft report grouping observations by section with status, follow-up and auditees, plus saved versions",
+          caption: "Draft report",
+        },
+        {
+          src: "/work/iacc-connect/final-report-editor.png",
+          alt: "IACC Connect final report editor with formatting tools beside a cover page preview, and PDF export",
+          caption: "Final report editor",
+        },
+      ],
+    },
     {
       slug: "fashion-villa",
       title: "Fashion Villa",
