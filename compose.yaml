@@ -1,7 +1,10 @@
+# Local use. Same image name that CI publishes to ghcr.io.
+#   docker compose up -d --build   # build from this checkout
+#   docker compose pull && docker compose up -d   # run the published image instead
 services:
   web:
     build: .
-    image: raihan-portfollio:latest
+    image: ghcr.io/raihan2945/raihan-portfollio:latest
     ports:
       - "4054:4054"
     restart: unless-stopped
