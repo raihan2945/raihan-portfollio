@@ -17,7 +17,7 @@ export function CopyEmail({ email }: { email: string }) {
     <button
       type="button"
       onClick={copy}
-      className="inline-flex w-fit items-center gap-2 rounded-full border border-line px-4 py-2 font-mono text-xs uppercase tracking-[0.14em] text-ink-soft transition-colors hover:border-ink hover:text-ink"
+      className="inline-flex h-12 items-center rounded-full border border-line px-5 font-display text-base font-semibold text-ink-soft transition-colors hover:border-ink hover:text-ink"
     >
       <span aria-live="polite">{copied ? "Copied ✓" : "Copy email"}</span>
     </button>

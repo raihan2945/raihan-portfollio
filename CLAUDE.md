@@ -19,11 +19,11 @@ There is no test suite.
 
 ## Architecture
 
-A single-page portfolio. Everything renders from `app/page.tsx` as one Server Component, and the sections are anchor targets (`#work`, `#about`, `#experience`, `#contact`) that the nav links to.
+A single-page portfolio. Everything renders from `app/page.tsx` as one Server Component. On large screens it's three columns: a sticky profile card on the left, one content column (max 720px) in the middle, and a floating icon nav fixed on the right. Below `lg` the card stacks on top and the nav becomes a bar along the bottom. The sections are anchor targets (`#home`, `#work`, `#experience`, `#about`, `#contact`) that the nav links to and highlights.
 
-**Content is data-driven.** All copy, projects, experience, socials and marquee items live in `content/site.ts` (imported as `@/content/site`, where `@/*` maps to the repo root). To change what the site says, edit that file, not the components. Projects and experience entries with `placeholder: true` are stand-ins, and work items show a "Placeholder" badge. `site.url` is still `example.com` and feeds `metadataBase`.
+**Content is data-driven.** All copy, projects (with their screenshots in `public/work/<slug>/`), experience, stats, section headings, socials and tools live in `content/site.ts` (imported as `@/content/site`, where `@/*` maps to the repo root). To change what the site says, edit that file, not the components. Projects and experience entries with `placeholder: true` are stand-ins, and work items show a "Placeholder" badge. `site.url` is still `example.com` and feeds `metadataBase`.
 
-**Client components are kept small and leaf-level** (`app/components/`): the nav scroll state, theme toggle, copy-email button, the work list's cursor-following hover preview (a rAF easing loop), and `RevealObserver`. The page itself stays a server component.
+**Client components are kept small and leaf-level** (`app/components/`): `SideNav` (active section via IntersectionObserver, plus the theme toggle), `ProjectCard` (steps through screenshots on hover, dots switch them), the copy-email button and `RevealObserver`. Icons are inline SVGs in `components/icons.tsx`. The page itself stays a server component.
 
 **Config (`next.config.ts`):**
 - `cacheComponents: true` and `partialPrefetching: true` are enabled.
@@ -50,13 +50,15 @@ A single-page portfolio. Everything renders from `app/page.tsx` as one Server Co
 ### Theming
 
 - Colour tokens are CSS variables in `app/globals.css`, exposed to Tailwind through `@theme inline` as `bg`, `bg-elev`, `ink`, `ink-soft`, `ink-faint`, `line`, `accent` and `accent-soft`. Use these utilities rather than raw colours.
-- Dark values are defined twice: under `@media (prefers-color-scheme: dark) :root:not([data-theme="light"])` and under `:root[data-theme="dark"]`. When you change a token, update both blocks.
-- An inline script in `app/layout.tsx` runs before first paint. It adds the `js` class to `<html>` and sets `data-theme` from `localStorage.theme` or the system preference. `ThemeToggle` flips that attribute, using the View Transitions API when available.
-- Fonts come from `next/font/google`: Geist (sans), Geist Mono, and Instrument Serif (the `.font-serif-italic` accent).
+- **Light is the default, on purpose.** Dark values live only under `:root[data-theme="dark"]`; there is no `prefers-color-scheme` block, so a system dark mode doesn't switch the site. When you change a token, update both `:root` and the dark block.
+- An inline script in `app/layout.tsx` runs before first paint. It adds the `js` class to `<html>` and sets `data-theme` to `dark` only if `localStorage.theme` says so, else `light`. `ThemeToggle` flips that attribute, using the View Transitions API when available.
+- `.card` is the shared surface (white, hairline border, soft shadow). `.orb` is the blurred gradient drifting behind the content.
+- Fonts come from `next/font/google`: Geist (body, `font-sans`), Rajdhani (headings, labels and pills, `font-display`) and Great Vibes (the signature on the portrait, `font-script`).
 
 ### Animation conventions (globals.css)
 
 - **Scroll reveal:** add `data-reveal` to an element. `RevealObserver` sets `data-shown` once the element is in view. Elements are only hidden under `.js`, so content stays visible without JS. Stagger with the `--reveal-delay` CSS variable (`page.tsx` has a `delay(ms)` helper).
-- **Load-in:** the `.rise` class plays a keyframe on mount, staggered with `--rise-delay`. It's used for the hero.
+- **Load-in:** the `.rise` class plays a keyframe on mount, staggered with `--rise-delay`. It's used for the intro, the profile card and the nav.
+- **Scroll-lit headings:** `SectionHead` in `page.tsx` splits the heading into `.lit-word` spans, each with `--p` (0–1, its position). A CSS scroll-driven animation on the `.lit` heading lights them in order. Browsers without `animation-timeline` support show the heading fully lit.
 - `prefers-reduced-motion` disables all of these globally.
 - `RevealObserver` queries the DOM once on mount, so `data-reveal` elements added later won't be observed.

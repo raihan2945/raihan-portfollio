@@ -1,42 +1,29 @@
 @import "tailwindcss";
 
 /* ── Colour tokens ─────────────────────────────────────────── */
-/* Cool neutrals + cobalt accent, drawn from the portrait's navy/slate tones */
+/* Light by default: warm paper greys, white cards, near-black ink and an
+   ember accent. Dark is opt-in through the theme toggle only. */
 :root {
-  --bg: #fbfbfd;
-  --bg-elev: #f2f4f8;
-  --ink: #0d1117;
-  --ink-soft: #4a5261;
-  --ink-faint: #8b93a1;
-  --line: rgb(13 17 23 / 0.09);
-  --accent: #2f54eb;
-  --accent-soft: rgb(47 84 235 / 0.09);
+  --bg: #f2f2ef;
+  --bg-elev: #ffffff;
+  --ink: #121212;
+  --ink-soft: #595956;
+  --ink-faint: #a3a39e;
+  --line: rgb(18 18 18 / 0.08);
+  --accent: #ff5a1f;
+  --accent-soft: rgb(255 90 31 / 0.1);
   color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0a0c10;
-    --bg-elev: #12151b;
-    --ink: #edf0f5;
-    --ink-soft: #a2aab7;
-    --ink-faint: #646c7a;
-    --line: rgb(237 240 245 / 0.09);
-    --accent: #7d95ff;
-    --accent-soft: rgb(125 149 255 / 0.12);
-    color-scheme: dark;
-  }
-}
-
 :root[data-theme="dark"] {
-  --bg: #0a0c10;
-  --bg-elev: #12151b;
-  --ink: #edf0f5;
-  --ink-soft: #a2aab7;
-  --ink-faint: #646c7a;
-  --line: rgb(237 240 245 / 0.09);
-  --accent: #7d95ff;
-  --accent-soft: rgb(125 149 255 / 0.12);
+  --bg: #0b0b0b;
+  --bg-elev: #151515;
+  --ink: #f1f1ef;
+  --ink-soft: #a6a6a1;
+  --ink-faint: #5f5f5b;
+  --line: rgb(241 241 239 / 0.08);
+  --accent: #ff6a33;
+  --accent-soft: rgb(255 106 51 / 0.14);
   color-scheme: dark;
 }
 
@@ -50,14 +37,14 @@
   --color-accent: var(--accent);
   --color-accent-soft: var(--accent-soft);
   --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-serif: var(--font-instrument-serif);
+  --font-display: var(--font-rajdhani);
+  --font-script: var(--font-great-vibes);
 }
 
 /* ── Base ──────────────────────────────────────────────────── */
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 5rem;
+  scroll-padding-top: 2rem;
 }
 
 body {
@@ -69,40 +56,72 @@ body {
 
 ::selection {
   background: var(--accent);
-  color: var(--bg);
+  color: #fff;
 }
 
-/* ── Utilities ─────────────────────────────────────────────── */
-.font-serif-italic {
-  font-family: var(--font-instrument-serif), ui-serif, Georgia, serif;
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: -0.01em;
+/* ── Surfaces ──────────────────────────────────────────────── */
+.card {
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 0.03),
+    0 12px 32px -18px rgb(0 0 0 / 0.12);
+}
+:root[data-theme="dark"] .card {
+  box-shadow: none;
 }
 
-.link-underline {
-  background-image: linear-gradient(currentColor, currentColor);
-  background-size: 0% 1px;
-  background-position: 0 100%;
-  background-repeat: no-repeat;
-  transition: background-size 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.link-underline:hover,
-.link-underline:focus-visible {
-  background-size: 100% 1px;
-}
-
-/* Marquee */
-@keyframes marquee {
-  to {
-    transform: translateX(-50%);
+/* Soft drifting orb behind the content column */
+@keyframes drift {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: translate(-46%, -54%) rotate(180deg) scale(1.08);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg) scale(1);
   }
 }
-.marquee-track {
-  animation: marquee 40s linear infinite;
+.orb {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(70vw, 760px);
+  aspect-ratio: 1;
+  border-radius: 9999px;
+  background:
+    radial-gradient(closest-side at 35% 35%, rgb(255 90 31 / 0.22), transparent 70%),
+    radial-gradient(closest-side at 65% 60%, rgb(120 120 115 / 0.16), transparent 72%),
+    radial-gradient(closest-side at 50% 50%, rgb(255 180 140 / 0.14), transparent 80%);
+  filter: blur(40px);
+  animation: drift 38s linear infinite;
 }
-.marquee:hover .marquee-track {
-  animation-play-state: paused;
+:root[data-theme="dark"] .orb {
+  opacity: 0.55;
+}
+
+/* ── Scroll-lit headings ───────────────────────────────────── */
+/* Each word starts faint and lights up as the heading scrolls through the
+   viewport. Browsers without scroll-driven animations show it fully lit. */
+@supports (animation-timeline: view()) {
+  .lit {
+    view-timeline: --lit block;
+  }
+  @keyframes lit-word {
+    from {
+      color: var(--ink-faint);
+    }
+    to {
+      color: var(--ink);
+    }
+  }
+  .lit-word {
+    color: var(--ink-faint);
+    animation: lit-word linear both;
+    animation-timeline: --lit;
+    animation-range: cover calc(12% + var(--p) * 26%) cover calc(18% + var(--p) * 26%);
+  }
 }
 
 /* Availability pulse */
@@ -139,7 +158,7 @@ body {
   transform: none;
 }
 
-/* Hero headline word stagger */
+/* Load-in stagger */
 @keyframes rise {
   from {
     opacity: 0;
@@ -176,6 +195,10 @@ body {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+  .lit-word {
+    animation: none;
+    color: var(--ink);
   }
   .js [data-reveal] {
     opacity: 1;

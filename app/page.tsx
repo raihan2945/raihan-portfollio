@@ -1,243 +1,277 @@
+import { Fragment } from "react";
 import Image from "next/image";
 import { site } from "@/content/site";
 import portrait from "./asset/raihan.webp";
-import { Nav } from "./components/nav";
-import { WorkList } from "./components/work-list";
 import { CopyEmail } from "./components/copy-email";
+import { ArrowUpRight, SocialIcon } from "./components/icons";
+import { ProjectCard } from "./components/project-card";
 import { RevealObserver } from "./components/reveal-observer";
-
-function SectionLabel({ index, children }: { index: string; children: React.ReactNode }) {
-  return (
-    <div data-reveal className="mb-12 flex items-center gap-4 sm:mb-16">
-      <span className="font-mono text-xs text-accent">({index})</span>
-      <span className="h-px w-10 bg-line" />
-      <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-ink-soft">{children}</h2>
-    </div>
-  );
-}
+import { SideNav } from "./components/side-nav";
 
 function delay(ms: number) {
   return { "--reveal-delay": `${ms}ms` } as React.CSSProperties;
 }
 
+function rise(ms: number) {
+  return { "--rise-delay": `${ms}ms` } as React.CSSProperties;
+}
+
+function Eyebrow({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return (
+    <p
+      className={`flex items-center gap-2 font-display text-sm font-semibold uppercase tracking-[0.16em] text-ink-soft ${className}`}
+    >
+      <span className="size-1.5 rounded-full bg-accent" />
+      {children}
+    </p>
+  );
+}
+
+/** Section heading: eyebrow tucked into the first line, words lit on scroll. */
+function SectionHead({ label, text }: { label: string; text: string }) {
+  const words = text.split(" ");
+  return (
+    <div data-reveal className="relative">
+      <Eyebrow className="mb-4 sm:absolute sm:left-0 sm:top-[0.85rem] sm:mb-0">{label}</Eyebrow>
+      <h2 className="lit font-display text-[clamp(1.9rem,4.4vw,2.9rem)] font-semibold leading-[1.08] tracking-[-0.01em] sm:indent-[11rem]">
+        {words.map((w, i) => (
+          <Fragment key={i}>
+            <span
+              className="lit-word"
+              style={{ "--p": words.length > 1 ? i / (words.length - 1) : 0 } as React.CSSProperties}
+            >
+              {w}
+            </span>
+            {i < words.length - 1 && " "}
+          </Fragment>
+        ))}
+      </h2>
+    </div>
+  );
+}
+
+function ProfileCard() {
+  const firstName = site.name.split(" ")[0];
+  return (
+    <div className="card rise mx-auto flex h-full max-w-md flex-col gap-5 rounded-[28px] p-5 sm:p-6 lg:max-w-none">
+      <div className="flex items-center justify-between gap-3">
+        <a
+          href="#top"
+          aria-label={`${site.name}, back to top`}
+          className="grid size-11 place-items-center rounded-full bg-ink font-display text-base font-bold tracking-wide text-bg transition-transform duration-700 hover:rotate-[360deg]"
+        >
+          {site.initials}
+        </a>
+        {site.available && (
+          <p className="inline-flex items-center gap-2.5 rounded-full border border-line px-4 py-2 font-display text-sm font-semibold text-ink-soft">
+            <span className="pulse-dot relative size-1.5 rounded-full bg-accent text-accent" />
+            {site.availabilityText}
+          </p>
+        )}
+      </div>
+
+      <div className="relative aspect-[1/0.95] overflow-hidden rounded-[22px] bg-[#1d2129] lg:aspect-auto lg:min-h-0 lg:flex-1">
+        <Image
+          src={portrait}
+          alt={`Portrait of ${site.name}`}
+          fill
+          sizes="(min-width: 1024px) 340px, 448px"
+          placeholder="blur"
+          loading="eager"
+          fetchPriority="high"
+          className="object-cover object-top"
+        />
+        <div aria-hidden className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent" />
+        <span
+          aria-hidden
+          className="absolute inset-x-0 bottom-2 text-center font-script text-[4.5rem] leading-none text-white [text-shadow:0_4px_24px_rgb(0_0_0/0.35)]"
+        >
+          {firstName}
+        </span>
+      </div>
+
+      <div className="text-center">
+        <a
+          href={`mailto:${site.email}`}
+          className="break-all font-display text-xl font-semibold transition-colors hover:text-accent"
+        >
+          {site.email}
+        </a>
+        <p className="mt-0.5 text-sm text-ink-faint">{site.role}</p>
+      </div>
+
+      <ul className="flex justify-center gap-2">
+        {site.socials.map((s) => (
+          <li key={s.label}>
+            <a
+              href={s.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={s.label}
+              className="grid size-10 place-items-center rounded-full border border-line bg-bg text-ink-soft transition-colors hover:border-ink hover:bg-ink hover:text-bg"
+            >
+              <SocialIcon label={s.label} />
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <a
+        href="#contact"
+        className="group flex items-center justify-between rounded-full border border-line py-1.5 pl-5 pr-1.5 font-display text-base font-semibold transition-colors hover:border-ink"
+      >
+        Get in touch
+        <span className="grid size-10 place-items-center rounded-full bg-ink text-bg transition-[background-color,rotate] duration-500 group-hover:rotate-45 group-hover:bg-accent group-hover:text-white">
+          <ArrowUpRight />
+        </span>
+      </a>
+    </div>
+  );
+}
+
 export default function Home() {
-  const words = site.headline.lead.split(" ");
+  const headWords = site.headline.lead.split(" ");
+  const pills = [site.facts[0].value, ...site.capabilities.map((c) => c.title)];
 
   return (
-    <>
-      <Nav name={site.name} initials={site.initials} />
+    <div id="top">
+      {/* Soft drifting orb behind everything */}
+      <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 overflow-hidden lg:left-[380px]">
+        <div className="orb" />
+      </div>
+
       <RevealObserver />
+      <SideNav />
 
-      <main id="top" className="flex-1 overflow-x-clip">
-        {/* ── Hero ───────────────────────────────────────────── */}
-        <section className="relative mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-end px-5 pb-14 pt-32 sm:px-8 sm:pb-20">
-          <div className="grid items-end gap-12 lg:grid-cols-12">
-            <div className="lg:col-span-8">
-              <div className="mb-10 flex items-center gap-3">
-                {/* Mobile / tablet avatar — the full portrait card shows on large screens */}
-                <span
-                  className="rise relative size-11 shrink-0 overflow-hidden rounded-full ring-1 ring-line lg:hidden"
-                  style={{ "--rise-delay": "0ms" } as React.CSSProperties}
-                >
-                  <Image
-                    src={portrait}
-                    alt=""
-                    fill
-                    sizes="96px"
-                    className="origin-[48%_30%] scale-[1.7] object-cover"
-                  />
+      <div className="px-4 pb-28 pt-4 sm:px-6 lg:grid lg:grid-cols-[minmax(320px,370px)_minmax(0,1fr)] lg:gap-10 lg:pb-4 lg:pl-4 lg:pr-24">
+        <aside className="lg:sticky lg:top-4 lg:h-[calc(100svh-2rem)]">
+          <ProfileCard />
+        </aside>
+
+        <main className="mx-auto w-full max-w-[720px]">
+          {/* ── Introduction ─────────────────────────────────── */}
+          <section id="home" className="pt-16 lg:pt-20">
+            <Eyebrow className="rise">Introduction</Eyebrow>
+
+            <h1 className="mt-6 font-display text-[clamp(2.7rem,6.4vw,4.6rem)] font-semibold leading-[0.98] tracking-[-0.015em]">
+              {headWords.map((w, i) => (
+                <span key={i} className="rise inline-block" style={rise(80 + i * 60)}>
+                  {w}&nbsp;
                 </span>
-                {site.available && (
-                  <p
-                    className="rise inline-flex w-fit items-center gap-2.5 rounded-full border border-line bg-bg-elev px-3.5 py-1.5 text-xs font-medium text-ink-soft"
-                    style={{ "--rise-delay": "60ms" } as React.CSSProperties}
-                  >
-                    <span className="pulse-dot relative size-1.5 rounded-full bg-emerald-500 text-emerald-500" />
-                    {site.availabilityText}
-                  </p>
-                )}
-              </div>
+              ))}
+              <span className="rise inline-block text-accent" style={rise(80 + headWords.length * 60)}>
+                {site.headline.accent}&nbsp;
+              </span>
+              <span className="rise inline text-ink-faint" style={rise(160 + headWords.length * 60)}>
+                {site.headline.tail}
+              </span>
+            </h1>
 
-              <h1 className="max-w-[17ch] text-[clamp(2.75rem,7.4vw,6.75rem)] font-medium leading-[0.95] tracking-[-0.045em] lg:max-w-none lg:text-[clamp(3.75rem,5.4vw,5.75rem)]">
-                {words.map((w, i) => (
-                  <span key={i} className="inline-block overflow-hidden pb-[0.08em] align-bottom">
-                    <span
-                      className="rise inline-block"
-                      style={{ "--rise-delay": `${120 + i * 70}ms` } as React.CSSProperties}
-                    >
-                      {w}&nbsp;
-                    </span>
-                  </span>
-                ))}
-                <span className="inline-block overflow-hidden pb-[0.08em] align-bottom">
-                  <span
-                    className="rise inline-block font-serif-italic text-accent"
-                    style={{ "--rise-delay": `${120 + words.length * 70}ms` } as React.CSSProperties}
-                  >
-                    {site.headline.accent}&nbsp;
-                  </span>
-                </span>
-                <span
-                  className="rise inline text-ink-faint"
-                  style={{ "--rise-delay": `${200 + words.length * 70}ms` } as React.CSSProperties}
-                >
-                  {site.headline.tail}
-                </span>
-              </h1>
-            </div>
-
-            {/* Portrait card (large screens) */}
-            <figure
-              className="rise relative mx-auto hidden w-full max-w-sm lg:col-span-4 lg:block"
-              style={{ "--rise-delay": "450ms" } as React.CSSProperties}
-            >
-              <div className="group relative aspect-[4/5] overflow-hidden rounded-3xl bg-[#1d2129] ring-1 ring-line">
-                <Image
-                  src={portrait}
-                  alt={`Portrait of ${site.name}`}
-                  fill
-                  sizes="(min-width: 1024px) 384px, 0px"
-                  placeholder="blur"
-                  loading="eager"
-                  fetchPriority="high"
-                  className="object-cover object-top transition-transform duration-[1.2s] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-[1.03]"
-                />
-                <div
-                  aria-hidden
-                  className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/55 to-transparent"
-                />
-                <figcaption className="absolute inset-x-6 bottom-5 text-white">
-                  <span className="block text-base font-medium tracking-tight">{site.name}</span>
-                  <span className="text-sm text-white/70">{site.role}</span>
-                </figcaption>
-              </div>
-            </figure>
-          </div>
-
-          <div className="mt-14 grid gap-10 border-t border-line pt-8 md:grid-cols-12">
-            <p
-              className="rise max-w-xl text-lg leading-relaxed text-ink-soft md:col-span-12 lg:col-span-6"
-              style={{ "--rise-delay": "700ms" } as React.CSSProperties}
-            >
+            <p className="rise mt-7 max-w-xl text-base leading-relaxed text-ink-soft" style={rise(600)}>
               {site.intro}
             </p>
 
-            <dl
-              className="rise grid grid-cols-3 gap-4 md:col-span-8 lg:col-span-4 lg:grid-cols-1 lg:gap-3"
-              style={{ "--rise-delay": "800ms" } as React.CSSProperties}
-            >
-              {site.facts.map((f) => (
-                <div key={f.label} className="lg:flex lg:justify-between lg:gap-4">
-                  <dt className="font-mono text-[10px] uppercase tracking-[0.16em] text-ink-faint">
-                    {f.label}
-                  </dt>
-                  <dd className="mt-1 text-sm lg:mt-0">{f.value}</dd>
+            <ul className="rise mt-8 flex flex-wrap gap-2" style={rise(700)}>
+              {pills.map((t) => (
+                <li key={t} className="card rounded-full px-4 py-2 font-display text-sm font-semibold">
+                  {t}
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-12 grid gap-3 sm:grid-cols-2">
+              {site.stats.map((s, i) => (
+                <div
+                  key={s.label}
+                  className="rise card flex min-h-[200px] flex-col justify-between rounded-[28px] p-6"
+                  style={rise(800 + i * 100)}
+                >
+                  <Eyebrow>{s.label}</Eyebrow>
+                  <div className="flex items-end justify-between gap-4">
+                    <p className="max-w-[12ch] text-sm leading-snug text-ink-faint">{s.note}</p>
+                    <p className="font-display text-[5.5rem] font-medium leading-[0.8] tracking-[-0.03em]">
+                      {s.value}
+                    </p>
+                  </div>
                 </div>
               ))}
-            </dl>
-
-            <div
-              className="rise flex items-start gap-3 whitespace-nowrap md:col-span-4 md:flex-col md:items-end lg:col-span-2"
-              style={{ "--rise-delay": "900ms" } as React.CSSProperties}
-            >
-              <a
-                href="#work"
-                className="group inline-flex items-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-medium text-bg transition-transform hover:-translate-y-0.5"
-              >
-                See work
-                <span className="transition-transform duration-300 group-hover:translate-y-0.5">↓</span>
-              </a>
-              <a href="#contact" className="link-underline py-3 text-sm">
-                Get in touch
-              </a>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* ── Marquee ────────────────────────────────────────── */}
-        <div
-          className="marquee overflow-hidden border-y border-line py-6 [mask-image:linear-gradient(90deg,transparent,#000_12%,#000_88%,transparent)]"
-          aria-label="Technologies"
-        >
-          <div className="marquee-track flex w-max">
-            {[0, 1].map((dup) => (
-              <ul key={dup} className="flex shrink-0 items-center" aria-hidden={dup === 1}>
-                {site.marquee.map((t) => (
-                  <li key={t} className="flex items-center">
-                    <span className="px-7 text-lg font-medium tracking-tight text-ink-faint sm:text-xl">
-                      {t}
-                    </span>
-                    <span className="size-1 rounded-full bg-accent/60" />
-                  </li>
-                ))}
-              </ul>
-            ))}
-          </div>
-        </div>
+          {/* ── Work ─────────────────────────────────────────── */}
+          <section id="work" className="pt-28 sm:pt-36">
+            <SectionHead label="Selected work" text={site.sections.work} />
+            <div className="mt-12 space-y-6">
+              {site.projects.map((p, i) => (
+                <ProjectCard key={p.slug} project={p} index={i} />
+              ))}
+            </div>
+          </section>
 
-        {/* ── Work ───────────────────────────────────────────── */}
-        <section id="work" className="mx-auto max-w-7xl px-5 py-28 sm:px-8 sm:py-36">
-          <SectionLabel index="01">Selected work</SectionLabel>
-          <div className="mb-14 flex flex-col justify-between gap-6 md:flex-row md:items-end">
-            <h2 data-reveal className="max-w-2xl text-4xl font-medium leading-[1.05] tracking-[-0.03em] sm:text-6xl">
-              Things I&apos;ve <span className="font-serif-italic text-accent">designed</span>, built
-              &amp; shipped.
-            </h2>
-            <p data-reveal style={delay(100)} className="max-w-xs text-sm leading-relaxed text-ink-soft">
-              Live products across e-commerce and fintech, from storefront to admin and API.
-              Hover a row for a preview.
-            </p>
-          </div>
-          <WorkList projects={site.projects} />
-        </section>
-
-        {/* ── About ──────────────────────────────────────────── */}
-        <section id="about" className="border-t border-line bg-bg-elev/50">
-          <div className="mx-auto max-w-7xl px-5 py-28 sm:px-8 sm:py-36">
-            <SectionLabel index="02">About</SectionLabel>
-
-            <p
-              data-reveal
-              className="max-w-5xl text-3xl leading-[1.2] tracking-[-0.02em] sm:text-5xl"
-            >
-              {site.about.statement.split("—")[0]}—
-              <span className="font-serif-italic text-ink-soft">
-                {site.about.statement.split("—").slice(1).join("—")}
-              </span>
-            </p>
-
-            <div className="mt-14 grid gap-8 md:grid-cols-12">
-              {site.about.body.map((para, i) => (
-                <p
+          {/* ── Experience ───────────────────────────────────── */}
+          <section id="experience" className="pt-28 sm:pt-36">
+            <SectionHead label="Experience" text={site.sections.experience} />
+            <ol className="mt-10">
+              {site.experience.map((e, i) => (
+                <li
                   key={i}
                   data-reveal
-                  style={delay(i * 100)}
-                  className={`text-base leading-relaxed text-ink-soft md:col-span-4 ${
-                    i === 0 ? "md:col-start-5" : ""
-                  }`}
+                  style={delay(i * 80)}
+                  className="flex flex-col gap-3 border-b border-line py-6 sm:flex-row sm:items-start sm:justify-between sm:gap-6"
                 >
+                  <div className="min-w-0">
+                    <p className="flex flex-wrap items-center gap-2 text-sm text-ink-faint">
+                      {e.company}
+                      {e.placeholder && (
+                        <span className="rounded-full bg-accent-soft px-2 py-0.5 font-display text-xs font-semibold text-accent">
+                          Placeholder
+                        </span>
+                      )}
+                    </p>
+                    <h3 className="mt-1 font-display text-2xl font-semibold tracking-tight">{e.role}</h3>
+                    <p className="mt-1.5 max-w-md text-sm leading-relaxed text-ink-soft">{e.summary}</p>
+                  </div>
+                  <span className="card w-fit shrink-0 rounded-full px-3.5 py-1.5 font-display text-sm font-semibold">
+                    {e.period}
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </section>
+
+          {/* ── About ────────────────────────────────────────── */}
+          <section id="about" className="pt-28 sm:pt-36">
+            <SectionHead label="About me" text={site.about.statement} />
+
+            <div className="mt-8 grid gap-5 sm:grid-cols-2">
+              {site.about.body.map((para, i) => (
+                <p key={i} data-reveal style={delay(i * 100)} className="text-base leading-relaxed text-ink-soft">
                   {para}
                 </p>
               ))}
             </div>
 
-            <div className="mt-24 grid gap-px overflow-hidden rounded-3xl border border-line bg-line md:grid-cols-3">
+            <dl data-reveal className="card mt-10 grid gap-5 rounded-[28px] p-6 sm:grid-cols-3">
+              {site.facts.map((f) => (
+                <div key={f.label}>
+                  <dt className="font-display text-sm font-semibold uppercase tracking-[0.14em] text-ink-faint">
+                    {f.label}
+                  </dt>
+                  <dd className="mt-1 font-display text-lg font-semibold">{f.value}</dd>
+                </div>
+              ))}
+            </dl>
+
+            <div className="mt-3 grid gap-3 md:grid-cols-3">
               {site.capabilities.map((c, i) => (
-                <div
-                  key={c.title}
-                  data-reveal
-                  style={delay(i * 120)}
-                  className="group flex flex-col bg-bg p-8 transition-colors duration-500 hover:bg-bg-elev sm:p-10"
-                >
-                  <div className="flex items-baseline justify-between">
-                    <h3 className="text-2xl font-medium tracking-tight">{c.title}</h3>
-                    <span className="font-mono text-xs text-ink-faint">0{i + 1}</span>
-                  </div>
-                  <p className="mt-4 text-sm leading-relaxed text-ink-soft">{c.blurb}</p>
-                  <ul className="mt-8 space-y-2.5 border-t border-line pt-6">
+                <div key={c.title} data-reveal style={delay(i * 100)} className="card flex flex-col rounded-[28px] p-6">
+                  <span className="font-display text-sm font-semibold text-accent">0{i + 1}</span>
+                  <h3 className="mt-2 font-display text-2xl font-semibold tracking-tight">{c.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-ink-soft">{c.blurb}</p>
+                  <ul className="mt-5 space-y-2 border-t border-line pt-5">
                     {c.items.map((item) => (
-                      <li key={item} className="flex items-center gap-3 text-sm">
-                        <span className="size-1 rounded-full bg-accent transition-transform duration-500 group-hover:scale-150" />
+                      <li key={item} className="flex items-center gap-2.5 text-sm">
+                        <span className="size-1 rounded-full bg-accent" />
                         {item}
                       </li>
                     ))}
@@ -245,90 +279,81 @@ export default function Home() {
                 </div>
               ))}
             </div>
-          </div>
-        </section>
 
-        {/* ── Experience ─────────────────────────────────────── */}
-        <section id="experience" className="mx-auto max-w-7xl px-5 py-28 sm:px-8 sm:py-36">
-          <SectionLabel index="03">Experience</SectionLabel>
-          <ol className="border-t border-line">
-            {site.experience.map((e, i) => (
-              <li
-                key={i}
-                data-reveal
-                style={delay(i * 80)}
-                className="grid gap-2 border-b border-line py-8 md:grid-cols-12 md:gap-6"
-              >
-                <span className="font-mono text-xs uppercase tracking-[0.14em] text-ink-faint md:col-span-3 md:pt-2">
-                  {e.period}
-                </span>
-                <div className="md:col-span-5">
-                  <h3 className="text-2xl font-medium tracking-tight">{e.role}</h3>
-                  <p className="mt-1 text-base text-ink-soft">{e.company}</p>
-                </div>
-                <p className="text-sm leading-relaxed text-ink-soft md:col-span-4 md:pt-2">
-                  {e.summary}
-                </p>
-              </li>
-            ))}
-          </ol>
-        </section>
+            <div className="pt-24">
+              <SectionHead label="Toolbox" text={site.sections.tools} />
+              <ul className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3">
+                {site.tools.map((t, i) => (
+                  <li
+                    key={t}
+                    data-reveal
+                    style={delay((i % 3) * 60)}
+                    className="card group flex items-center justify-between gap-3 rounded-2xl px-4 py-4 transition-colors hover:border-ink"
+                  >
+                    <span className="font-display text-lg font-semibold">{t}</span>
+                    <span className="font-display text-sm font-semibold text-ink-faint transition-colors group-hover:text-accent">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
 
-        {/* ── Contact ────────────────────────────────────────── */}
-        <section id="contact" className="relative border-t border-line">
-          <div className="relative mx-auto max-w-7xl px-5 py-28 sm:px-8 sm:py-40">
-            <SectionLabel index="04">Contact</SectionLabel>
-            <h2
-              data-reveal
-              className="max-w-5xl text-[clamp(2.75rem,9vw,8.5rem)] font-medium leading-[0.92] tracking-[-0.05em]"
-            >
-              Let&apos;s build something{" "}
-              <span className="font-serif-italic text-accent">good</span>.
-            </h2>
+          {/* ── Contact ──────────────────────────────────────── */}
+          <section id="contact" className="pt-28 sm:pt-36">
+            <SectionHead label="Contact" text={site.sections.contact} />
 
-            <div data-reveal style={delay(120)} className="mt-14 flex flex-col gap-6 sm:flex-row sm:items-center">
+            <div data-reveal className="card mt-10 rounded-[28px] p-6 sm:p-8">
+              <p className="text-sm text-ink-faint">Write to me at</p>
               <a
                 href={`mailto:${site.email}`}
-                className="link-underline w-fit break-all text-xl tracking-tight sm:text-3xl"
+                className="mt-1 block break-all font-display text-[clamp(1.7rem,4.6vw,2.75rem)] font-semibold leading-tight transition-colors hover:text-accent"
               >
                 {site.email}
               </a>
-              <CopyEmail email={site.email} />
+
+              <div className="mt-8 flex flex-wrap items-center gap-3">
+                <a
+                  href={`mailto:${site.email}`}
+                  className="group inline-flex h-12 items-center gap-4 rounded-full bg-ink pl-5 pr-1.5 font-display text-base font-semibold text-bg"
+                >
+                  Start a project
+                  <span className="grid size-9 place-items-center rounded-full bg-accent text-white transition-transform duration-500 group-hover:rotate-45">
+                    <ArrowUpRight />
+                  </span>
+                </a>
+                <CopyEmail email={site.email} />
+              </div>
+
+              <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-3 border-t border-line pt-6">
+                {site.socials.map((s) => (
+                  <li key={s.label}>
+                    <a
+                      href={s.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 font-display text-base font-semibold text-ink-soft transition-colors hover:text-ink"
+                    >
+                      <SocialIcon label={s.label} width={14} height={14} />
+                      {s.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </div>
+          </section>
 
-            <ul data-reveal style={delay(200)} className="mt-16 flex flex-wrap gap-x-8 gap-y-3">
-              {site.socials.map((s) => (
-                <li key={s.label}>
-                  <a
-                    href={s.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-[0.16em] text-ink-soft transition-colors hover:text-ink"
-                  >
-                    {s.label}
-                    <span className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
-                      ↗
-                    </span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-      </main>
-
-      {/* ── Footer ───────────────────────────────────────────── */}
-      <footer className="border-t border-line">
-        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-5 py-8 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-faint sm:flex-row sm:items-center sm:justify-between sm:px-8">
-          <span>
-            © {site.copyrightYear} {site.name}
-          </span>
-          <span>Designed &amp; built by hand</span>
-          <a href="#top" className="transition-colors hover:text-ink">
-            Back to top ↑
-          </a>
-        </div>
-      </footer>
-    </>
+          <footer className="mt-20 flex flex-col gap-2 border-t border-line py-6 font-display text-sm font-semibold text-ink-faint sm:flex-row sm:justify-between">
+            <span>
+              © {site.copyrightYear} {site.name}
+            </span>
+            <a href="#top" className="transition-colors hover:text-ink">
+              Back to top ↑
+            </a>
+          </footer>
+        </main>
+      </div>
+    </div>
   );
 }

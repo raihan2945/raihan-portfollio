@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { Geist, Great_Vibes, Rajdhani } from "next/font/google";
 import { site } from "@/content/site";
 import "./globals.css";
 
@@ -8,16 +8,16 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const rajdhani = Rajdhani({
+  variable: "--font-rajdhani",
   subsets: ["latin"],
+  weight: ["500", "600", "700"],
 });
 
-const instrumentSerif = Instrument_Serif({
-  variable: "--font-instrument-serif",
+const greatVibes = Great_Vibes({
+  variable: "--font-great-vibes",
   subsets: ["latin"],
   weight: "400",
-  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
@@ -35,27 +35,24 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#fbfbfd" },
-    { media: "(prefers-color-scheme: dark)", color: "#0a0c10" },
-  ],
+  themeColor: "#f2f2ef",
 };
 
-// Runs before first paint: marks JS as available and applies the saved
-// (or system) theme so there is no flash when the page hydrates.
-const themeScript = `(function(){var d=document.documentElement;d.classList.add("js");try{var t=localStorage.getItem("theme");if(t!=="light"&&t!=="dark"){t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}d.setAttribute("data-theme",t)}catch(e){}})()`;
+// Runs before first paint: marks JS as available and applies the saved theme.
+// Light is the default; dark only applies when the visitor picked it.
+const themeScript = `(function(){var d=document.documentElement;d.classList.add("js");try{d.setAttribute("data-theme",localStorage.getItem("theme")==="dark"?"dark":"light")}catch(e){}})()`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${rajdhani.variable} ${greatVibes.variable} h-full antialiased`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full">{children}</body>
     </html>
   );
 }

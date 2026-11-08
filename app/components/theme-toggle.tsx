@@ -1,6 +1,6 @@
 "use client";
 
-export function ThemeToggle() {
+export function ThemeToggle({ className = "" }: { className?: string }) {
   function toggle() {
     const root = document.documentElement;
     const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
@@ -19,16 +19,11 @@ export function ThemeToggle() {
   }
 
   return (
-    <button
-      type="button"
-      onClick={toggle}
-      aria-label="Toggle colour theme"
-      className="grid size-9 place-items-center rounded-full border border-line text-ink-soft transition-colors hover:border-ink hover:text-ink"
-    >
+    <button type="button" onClick={toggle} aria-label="Toggle colour theme" className={className}>
       <svg
         className="theme-icon-moon"
-        width="16"
-        height="16"
+        width="17"
+        height="17"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -41,8 +36,8 @@ export function ThemeToggle() {
       </svg>
       <svg
         className="theme-icon-sun"
-        width="16"
-        height="16"
+        width="17"
+        height="17"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"

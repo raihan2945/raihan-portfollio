@@ -66,6 +66,20 @@ export const site = {
     { label: "Data", value: "PostgreSQL · Redis" },
   ],
 
+  // Big numbers in the intro cards. TODO: swap in years of experience etc. once confirmed.
+  stats: [
+    { label: "Live products", value: "03", note: "E-commerce and fintech, in production" },
+    { label: "Stack layers", value: "03", note: "Frontend, backend and infrastructure" },
+  ],
+
+  // Section headings. Each one lights up word by word as it scrolls into view.
+  sections: {
+    work: "Live products I've designed, built and shipped, from storefront to admin and API.",
+    experience: "Where I've been building, owning features from the database to the deploy.",
+    tools: "The tools I reach for every day.",
+    contact: "Have a product in mind? Let's build something good together.",
+  },
+
   socials: [
     // TODO: replace with your real profile URLs
     { label: "GitHub", href: "https://github.com/" },
@@ -73,7 +87,7 @@ export const site = {
     { label: "X / Twitter", href: "https://x.com/" },
   ],
 
-  marquee: [
+  tools: [
     "TypeScript",
     "React",
     "Next.js",
